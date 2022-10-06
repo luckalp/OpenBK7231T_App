@@ -411,8 +411,14 @@ int channelSet(mqtt_request_t* request){
 
   addLogAdv(LOG_INFO,LOG_FEATURE_MQTT,"MQTT client in mqtt_incoming_data_cb data is %s for ch %i\n", copy, channel);
 
-  iValue = atoi((char *)copy);
-  CHANNEL_Set(channel,iValue,0);
+  // iValue = atoi((char *)copy);
+  // CHANNEL_Set(channel,iValue,0);
+  if(len > 0 && copy[0] == 't'){
+    CHANNEL_Toggle(channel);
+  }else{
+    iValue = atoi((char *)copy);
+    CHANNEL_Set(channel,iValue,0);
+  }
 
   // return 1 to stop processing callbacks here.
   // return 0 to allow later callbacks to process this topic.
